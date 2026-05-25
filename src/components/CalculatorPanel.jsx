@@ -18,79 +18,79 @@ export default function CalculatorPanel({
         {/* Background backdrop blur */}
         <div 
           onClick={() => setSelectedTroquel(null)}
-          className="absolute inset-0 bg-slate-900/30 backdrop-blur-sm transition-opacity duration-300 animate-in fade-in"
+          className="absolute inset-0 bg-[rgba(29,29,31,0.18)] backdrop-blur-sm transition-opacity duration-300 animate-in fade-in"
         ></div>
 
         <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
           <div className="pointer-events-auto w-screen max-w-lg animate-in slide-in-from-right duration-300">
-            <div className="flex h-full flex-col overflow-y-scroll glass-panel-dark text-slate-100 shadow-2xl">
+            <div className="flex h-full flex-col overflow-y-scroll neu-bg-modal neu-text-main shadow-2xl">
               
               {/* Header */}
-              <div className="bg-slate-950 px-6 py-6 text-white relative border-b border-slate-800">
+              <div className="px-6 py-6 relative z-10">
                 <button
                   type="button"
                   onClick={() => setSelectedTroquel(null)}
-                  className="absolute top-6 right-6 rounded-full p-1.5 text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                  className="absolute top-6 right-6 rounded-full p-2 neu-text-sec hover:neu-text-red transition-colors cursor-pointer"
                 >
                   <X className="h-5 w-5" />
                 </button>
                 
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="bg-white/10 p-2 rounded-xl border border-white/5">
-                    <Calculator className="w-5 h-5 text-slate-200" />
+                  <div className="neu-concave p-2">
+                    <Calculator className="w-5 h-5 neu-text-blue" />
                   </div>
-                  <h2 className="text-lg font-bold tracking-tight text-white" id="slide-over-title">
+                  <h2 className="text-lg font-bold tracking-tight neu-text-main" id="slide-over-title">
                     Cálculo Técnico de Insumos
                   </h2>
                 </div>
-                <p className="text-xs text-slate-400">
-                  Optimización y volumetría de producción para herramental <span className="font-semibold text-slate-200">{selectedTroquel.codigo_troquel}</span>
+                <p className="text-xs neu-text-sec">
+                  Optimización y volumetría de producción para herramental <span className="font-semibold neu-text-main">{selectedTroquel.codigo_troquel}</span>
                 </p>
               </div>
 
               {/* Body */}
-              <div className="flex-1 px-6 py-6 space-y-6 bg-slate-900/20 overflow-y-auto">
+              <div className="flex-1 px-6 py-2 space-y-6 overflow-y-auto">
                 
                 {/* Ficha Técnica del Troquel */}
-                <div className="bg-slate-900/40 rounded-xl p-4.5 border border-white/5 shadow-sm space-y-3">
-                  <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                    <Sparkles className="w-3 h-3 text-slate-400" /> ESPECIFICACIÓN DEL HERRAMENTAL
+                <div className="neu-elevated p-5 space-y-4">
+                  <h3 className="text-[10px] font-bold uppercase tracking-wider neu-text-sec flex items-center gap-1.5">
+                    <Sparkles className="w-3 h-3" /> ESPECIFICACIÓN DEL HERRAMENTAL
                   </h3>
                   
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    <div className="bg-slate-950/40 p-2.5 rounded-lg border border-white/5">
-                      <p className="text-[9px] text-slate-500 font-bold uppercase">Medidas</p>
-                      <p className="text-xs font-semibold text-slate-200">{selectedTroquel.ancho_mm} x {selectedTroquel.largo_mm} mm</p>
+                    <div className="neu-concave p-3">
+                      <p className="text-[9px] neu-text-sec font-bold uppercase">Medidas</p>
+                      <p className="text-xs font-semibold neu-text-main">{selectedTroquel.ancho_mm} x {selectedTroquel.largo_mm} mm</p>
                     </div>
-                    <div className="bg-slate-950/40 p-2.5 rounded-lg border border-white/5">
-                      <p className="text-[9px] text-slate-500 font-bold uppercase">Vías al Ancho</p>
-                      <p className="text-xs font-semibold text-slate-200">{selectedTroquel.cavidades_ancho} vías</p>
+                    <div className="neu-concave p-3">
+                      <p className="text-[9px] neu-text-sec font-bold uppercase">Vías al Ancho</p>
+                      <p className="text-xs font-semibold neu-text-main">{selectedTroquel.cavidades_ancho} vías</p>
                     </div>
-                    <div className="bg-slate-950/40 p-2.5 rounded-lg border border-white/5">
-                      <p className="text-[9px] text-slate-500 font-bold uppercase">Rep. Avance</p>
-                      <p className="text-xs font-semibold text-slate-200">{selectedTroquel.cavidades_avance} rep.</p>
+                    <div className="neu-concave p-3">
+                      <p className="text-[9px] neu-text-sec font-bold uppercase">Rep. Avance</p>
+                      <p className="text-xs font-semibold neu-text-main">{selectedTroquel.cavidades_avance} rep.</p>
                     </div>
-                    <div className="bg-slate-950/40 p-2.5 rounded-lg border border-white/5">
-                      <p className="text-[9px] text-slate-500 font-bold uppercase">Cilindro Base</p>
-                      <p className="text-xs font-semibold text-slate-200">{selectedTroquel.cilindro || 'N/A'}</p>
+                    <div className="neu-concave p-3">
+                      <p className="text-[9px] neu-text-sec font-bold uppercase">Cilindro Base</p>
+                      <p className="text-xs font-semibold neu-text-main">{selectedTroquel.cilindro || 'N/A'}</p>
                     </div>
-                    <div className="bg-slate-950/40 p-2.5 rounded-lg border border-white/5">
-                      <p className="text-[9px] text-slate-500 font-bold uppercase">Desarrollo (Repeat)</p>
-                      <p className="text-xs font-semibold text-slate-200">{selectedTroquel.repeat_mm} mm</p>
+                    <div className="neu-concave p-3">
+                      <p className="text-[9px] neu-text-sec font-bold uppercase">Desarrollo (Repeat)</p>
+                      <p className="text-xs font-semibold neu-text-main">{selectedTroquel.repeat_mm} mm</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-slate-900/40 rounded-xl p-4.5 border border-white/5 shadow-sm space-y-4">
-                  <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5 border-b border-white/5 pb-2.5">
-                    <Sliders className="w-3 h-3 text-slate-400" /> PARÁMETROS DE PRODUCCIÓN
+                <div className="neu-elevated p-5 space-y-5">
+                  <h3 className="text-[10px] font-bold uppercase tracking-wider neu-text-sec flex items-center gap-1.5 pb-1">
+                    <Sliders className="w-3 h-3" /> PARÁMETROS DE PRODUCCIÓN
                   </h3>
 
                   {/* Cantidad requerida */}
-                  <div className="space-y-1.5">
+                  <div className="space-y-2">
                     <div className="flex justify-between items-center text-xs">
-                      <label className="font-bold text-slate-350">Volumen Requerido (Etiquetas)</label>
-                      <span className="text-[11px] font-semibold text-slate-400">{Number(calcInputs.cantidadEtiquetas).toLocaleString()} uds</span>
+                      <label className="font-bold neu-text-main">Volumen Requerido (Etiquetas)</label>
+                      <span className="text-[11px] font-semibold neu-text-blue">{Number(calcInputs.cantidadEtiquetas).toLocaleString()} uds</span>
                     </div>
                     <input
                       type="number"
@@ -98,19 +98,19 @@ export default function CalculatorPanel({
                       value={calcInputs.cantidadEtiquetas}
                       onChange={handleCalcInputChange}
                       min="1"
-                      className="w-full px-3 py-2 bg-slate-950 border border-white/10 rounded-lg focus:ring-1 focus:ring-white/20 focus:border-white/35 outline-none font-semibold text-white transition-all text-sm"
+                      className="w-full px-4 py-2.5 neu-concave focus:ring-2 focus:ring-blue-500/20 outline-none font-semibold neu-text-main transition-all text-sm"
                     />
                     {/* Botones rápidos */}
-                    <div className="flex flex-wrap gap-1.5 pt-1">
+                    <div className="flex flex-wrap gap-2 pt-2">
                       {[5000, 10000, 25000, 50000, 100000].map(val => (
                         <button
                           key={`preset-${val}`}
                           type="button"
                           onClick={() => setCalcInputs(prev => ({ ...prev, cantidadEtiquetas: val }))}
-                          className={`px-2.5 py-1 rounded text-[10px] font-bold transition-all border cursor-pointer ${
+                          className={`px-3 py-1.5 text-[10px] font-bold transition-all cursor-pointer rounded-[14px] ${
                             calcInputs.cantidadEtiquetas === val
-                              ? 'bg-white text-slate-950 border-white shadow-sm'
-                              : 'bg-slate-950 hover:bg-slate-900 text-slate-400 border-white/10'
+                              ? 'neu-elevated neu-text-blue'
+                              : 'neu-concave neu-text-sec hover:neu-text-main'
                           }`}
                         >
                           {val.toLocaleString()}
@@ -119,23 +119,23 @@ export default function CalculatorPanel({
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 gap-4">
                     {/* Etiquetas por Rollo */}
-                    <div className="space-y-1.5">
-                      <label className="block text-xs font-bold text-slate-355">Cantidad por Rollo</label>
+                    <div className="space-y-2">
+                      <label className="block text-xs font-bold neu-text-main">Cantidad por Rollo</label>
                       <input
                         type="number"
                         name="etiquetasPorRollo"
                         value={calcInputs.etiquetasPorRollo}
                         onChange={handleCalcInputChange}
                         min="1"
-                        className="w-full px-3 py-2 bg-slate-950 border border-white/10 rounded-lg focus:ring-1 focus:ring-white/20 focus:border-white/35 outline-none font-semibold text-white transition-all text-sm"
+                        className="w-full px-4 py-2.5 neu-concave focus:ring-2 focus:ring-blue-500/20 outline-none font-semibold neu-text-main transition-all text-sm"
                       />
                     </div>
 
                     {/* Ancho de Banda */}
-                    <div className="space-y-1.5">
-                      <label className="block text-xs font-bold text-slate-355">Ancho Banda (in)</label>
+                    <div className="space-y-2">
+                      <label className="block text-xs font-bold neu-text-main">Ancho Banda (in)</label>
                       <input
                         type="number"
                         step="0.01"
@@ -143,30 +143,30 @@ export default function CalculatorPanel({
                         value={calcInputs.anchoBanda}
                         onChange={handleCalcInputChange}
                         min="0"
-                        className="w-full px-3 py-2 bg-slate-950 border border-white/10 rounded-lg focus:ring-1 focus:ring-white/20 focus:border-white/35 outline-none font-semibold text-white transition-all text-sm"
+                        className="w-full px-4 py-2.5 neu-concave focus:ring-2 focus:ring-blue-500/20 outline-none font-semibold neu-text-main transition-all text-sm"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3 pt-1">
+                  <div className="grid grid-cols-2 gap-4 pt-1">
                     {/* Merma Arranque */}
-                    <div className="space-y-1.5">
-                      <label className="block text-xs font-bold text-slate-355">Merma de Montaje (m)</label>
+                    <div className="space-y-2">
+                      <label className="block text-xs font-bold neu-text-main">Merma de Montaje (m)</label>
                       <input
                         type="number"
                         name="mermaArranque"
                         value={calcInputs.mermaArranque}
                         onChange={handleCalcInputChange}
                         min="0"
-                        className="w-full px-3 py-2 bg-slate-950 border border-white/10 rounded-lg focus:ring-1 focus:ring-white/20 focus:border-white/35 outline-none font-semibold text-white transition-all text-sm"
+                        className="w-full px-4 py-2.5 neu-concave focus:ring-2 focus:ring-blue-500/20 outline-none font-semibold neu-text-main transition-all text-sm"
                       />
                     </div>
 
                     {/* Merma Operación */}
-                    <div className="space-y-1.5">
+                    <div className="space-y-2">
                       <div className="flex justify-between items-center text-xs">
-                        <label className="font-bold text-slate-355">Merma Op. (%)</label>
-                        <span className="text-[10px] font-bold text-slate-300 bg-white/5 border border-white/15 px-1.5 py-0.2 rounded">{calcInputs.mermaOperacion}%</span>
+                        <label className="font-bold neu-text-main">Merma Op. (%)</label>
+                        <span className="text-[10px] font-bold neu-text-blue">{calcInputs.mermaOperacion}%</span>
                       </div>
                       <input
                         type="number"
@@ -175,7 +175,7 @@ export default function CalculatorPanel({
                         onChange={handleCalcInputChange}
                         min="0"
                         max="100"
-                        className="w-full px-3 py-2 bg-slate-950 border border-white/10 rounded-lg focus:ring-1 focus:ring-white/20 focus:border-white/35 outline-none font-semibold text-white transition-all text-sm"
+                        className="w-full px-4 py-2.5 neu-concave focus:ring-2 focus:ring-blue-500/20 outline-none font-semibold neu-text-main transition-all text-sm"
                       />
                     </div>
                   </div>
@@ -183,59 +183,59 @@ export default function CalculatorPanel({
                 </div>
 
                 {/* Resultados del Cálculo */}
-                <div className="space-y-3">
-                  <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                <div className="space-y-4 pb-8">
+                  <h3 className="text-[10px] font-bold uppercase tracking-wider neu-text-sec flex items-center gap-1.5 pl-2">
                     RESUMEN DE RENDIMIENTO DE INSUMOS
                   </h3>
 
                   {/* Tarjeta de Metros Totales (Hero) */}
-                  <div className="bg-slate-950 text-white rounded-xl p-4.5 border border-white/10 shadow-lg flex items-center justify-between">
+                  <div className="neu-elevated p-6 flex items-center justify-between">
                     <div>
-                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Metros Lineales Totales de Producción</p>
-                      <p className="text-3xl font-extrabold tracking-tight mt-1 text-white">
-                        {calcResultados?.metrosTotales?.toLocaleString()} <span className="text-lg font-medium text-slate-400">m</span>
+                      <p className="text-[10px] font-bold neu-text-sec uppercase tracking-wider">Metros Lineales Totales de Producción</p>
+                      <p className="text-3xl font-extrabold tracking-tight mt-1 neu-text-blue">
+                        {calcResultados?.metrosTotales?.toLocaleString()} <span className="text-lg font-medium neu-text-main">m</span>
                       </p>
-                      <p className="text-[10px] text-slate-500 font-semibold mt-1">
+                      <p className="text-[10px] neu-text-sec font-semibold mt-1">
                         {calcResultados?.metrosNetos?.toLocaleString()} m netos + {calcResultados?.metrosMerma?.toLocaleString()} m de merma técnica
                       </p>
                     </div>
-                    <div className="bg-white/5 p-3 rounded-lg border border-white/5">
-                      <Ruler className="w-8 h-8 text-slate-400" />
+                    <div className="neu-concave p-4">
+                      <Ruler className="w-8 h-8 neu-text-blue" />
                     </div>
                   </div>
 
                   {/* Grid de Métricas secundarias */}
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="bg-slate-900/40 p-3 rounded-xl border border-white/5 shadow-sm">
-                      <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Consumo de Material (m²)</p>
-                      <p className="text-base font-bold text-slate-200 mt-0.5">{calcResultados?.metrosCuadrados?.toLocaleString()} m²</p>
-                      <p className="text-[9px] text-slate-500 font-semibold">Banda: {calcResultados?.anchoBandaMm} mm</p>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="neu-elevated p-4">
+                      <p className="text-[9px] font-bold neu-text-sec uppercase tracking-wider">Consumo de Material (m²)</p>
+                      <p className="text-base font-bold neu-text-main mt-0.5">{calcResultados?.metrosCuadrados?.toLocaleString()} m²</p>
+                      <p className="text-[9px] neu-text-sec font-semibold mt-1">Banda: {calcResultados?.anchoBandaMm} mm</p>
                     </div>
 
-                    <div className="bg-slate-900/40 p-3 rounded-xl border border-white/5 shadow-sm">
-                      <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Longitud por Rollo (m)</p>
-                      <p className="text-base font-bold text-slate-200 mt-0.5">{calcResultados?.largoRollo?.toLocaleString()} m</p>
-                      <p className="text-[9px] text-slate-500 font-semibold">{calcInputs.etiquetasPorRollo?.toLocaleString()} etiq/rollo</p>
+                    <div className="neu-elevated p-4">
+                      <p className="text-[9px] font-bold neu-text-sec uppercase tracking-wider">Longitud por Rollo (m)</p>
+                      <p className="text-base font-bold neu-text-main mt-0.5">{calcResultados?.largoRollo?.toLocaleString()} m</p>
+                      <p className="text-[9px] neu-text-sec font-semibold mt-1">{calcInputs.etiquetasPorRollo?.toLocaleString()} etiq/rollo</p>
                     </div>
 
-                    <div className="bg-slate-900/40 p-3 rounded-xl border border-white/5 shadow-sm">
-                      <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Cantidad de Rollos</p>
-                      <p className="text-base font-bold text-slate-200 mt-0.5">{calcResultados?.rollos} rollos</p>
-                      <p className="text-[9px] text-slate-500 font-semibold">{selectedTroquel.cavidades_ancho} vías de salida</p>
+                    <div className="neu-elevated p-4">
+                      <p className="text-[9px] font-bold neu-text-sec uppercase tracking-wider">Cantidad de Rollos</p>
+                      <p className="text-base font-bold neu-text-main mt-0.5">{calcResultados?.rollos} rollos</p>
+                      <p className="text-[9px] neu-text-sec font-semibold mt-1">{selectedTroquel.cavidades_ancho} vías de salida</p>
                     </div>
 
-                    <div className="bg-slate-900/40 p-3 rounded-xl border border-white/5 shadow-sm">
-                      <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Ciclos de Giro de Cilindro</p>
-                      <p className="text-base font-bold text-slate-200 mt-0.5">{calcResultados?.girosBase?.toLocaleString()} giros</p>
-                      <p className="text-[9px] text-slate-500 font-semibold">{selectedTroquel.cavidades_ancho * selectedTroquel.cavidades_avance} etiq/giro</p>
+                    <div className="neu-elevated p-4">
+                      <p className="text-[9px] font-bold neu-text-sec uppercase tracking-wider">Ciclos de Giro de Cilindro</p>
+                      <p className="text-base font-bold neu-text-main mt-0.5">{calcResultados?.girosBase?.toLocaleString()} giros</p>
+                      <p className="text-[9px] neu-text-sec font-semibold mt-1">{selectedTroquel.cavidades_ancho * selectedTroquel.cavidades_avance} etiq/giro</p>
                     </div>
                   </div>
 
                   {/* Info alert */}
-                  <div className="bg-white/5 rounded-xl p-3 border border-white/5 text-[10px] text-slate-400 leading-relaxed flex items-start gap-2">
-                    <AlertCircle className="w-3.5 h-3.5 text-slate-450 shrink-0 mt-0.5" />
+                  <div className="neu-concave p-4 text-[10px] neu-text-sec leading-relaxed flex items-start gap-3">
+                    <AlertCircle className="w-4 h-4 neu-text-blue shrink-0 mt-0.5" />
                     <div>
-                      Nota de control de producción: Para cumplir con el volumen neto solicitado de {Number(calcInputs.cantidadEtiquetas).toLocaleString()} etiquetas distribuidas en {calcResultados?.rollos} rollos de {Number(calcInputs.etiquetasPorRollo).toLocaleString()} unidades, se requiere procesar un total de <span className="font-semibold text-slate-200">{calcResultados?.etiquetasTotalesConMerma?.toLocaleString()} etiquetas</span>, compensando las mermas técnicas de montaje y operación especificadas.
+                      Nota de control de producción: Para cumplir con el volumen neto solicitado de {Number(calcInputs.cantidadEtiquetas).toLocaleString()} etiquetas distribuidas en {calcResultados?.rollos} rollos de {Number(calcInputs.etiquetasPorRollo).toLocaleString()} unidades, se requiere procesar un total de <span className="font-semibold neu-text-main">{calcResultados?.etiquetasTotalesConMerma?.toLocaleString()} etiquetas</span>, compensando las mermas técnicas de montaje y operación especificadas.
                     </div>
                   </div>
 
@@ -244,11 +244,11 @@ export default function CalculatorPanel({
               </div>
 
               {/* Footer */}
-              <div className="bg-slate-955 px-6 py-4 border-t border-slate-800 flex items-center justify-between gap-4">
+              <div className="px-6 py-5 flex items-center justify-between gap-4">
                 <button
                   type="button"
                   onClick={() => setSelectedTroquel(null)}
-                  className="px-4 py-2.5 text-xs font-bold text-slate-400 hover:text-white transition-colors cursor-pointer"
+                  className="px-5 py-3 text-xs font-bold neu-text-sec hover:neu-text-main transition-colors cursor-pointer"
                 >
                   Cerrar
                 </button>
@@ -256,20 +256,16 @@ export default function CalculatorPanel({
                 <button
                   type="button"
                   onClick={handleCopiarResumen}
-                  className={`flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-lg text-xs font-bold text-white transition-all shadow-md cursor-pointer ${
-                    copied 
-                      ? 'bg-emerald-600 hover:bg-emerald-700 shadow-sm' 
-                      : 'bg-gradient-to-r from-blue-700 via-purple-600 to-emerald-500 hover:from-blue-800 hover:via-purple-700 hover:to-emerald-600 shadow-sm'
-                  }`}
+                  className="flex items-center justify-center gap-2 px-6 py-3 neu-btn-primary font-bold transition-all cursor-pointer text-xs"
                 >
                   {copied ? (
                     <>
-                      <Check className="w-3.5 h-3.5" />
+                      <Check className="w-4 h-4" />
                       <span>¡Copiado!</span>
                     </>
                   ) : (
                     <>
-                      <Copy className="w-3.5 h-3.5" />
+                      <Copy className="w-4 h-4" />
                       <span>Copiar Datos Técnicos</span>
                     </>
                   )}

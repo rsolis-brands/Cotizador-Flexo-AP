@@ -183,7 +183,7 @@ RESULTADOS:
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-900 overflow-x-hidden">
+    <div className="min-h-screen neu-bg-main neu-text-main font-sans selection:bg-blue-100 selection:text-blue-900 overflow-x-hidden">
       
       {/* Navbar/Header */}
       <Header activeTab={activeTab} setActiveTab={setActiveTab} />

@@ -4,18 +4,30 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+:root {
+  --color-bg-main: #F5F5F7;
+  --color-surface: #FFFFFF;
+  --color-modal: #ECECEF;
+  --color-text-main: #1D1D1F;
+  --color-text-secondary: #6E6E73;
+  --color-brand-blue: #005CB9;
+  --color-brand-red: #E4171C;
+  --color-btn-dark: #2C2C2E;
+  --color-overlay: rgba(29, 29, 31, 0.18);
+}
+
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
   font-family: var(--font-sans);
-  background-color: #f8fafc;
-  color: #0f172a;
+  background-color: var(--color-bg-main);
+  color: var(--color-text-main);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom Scrollbar for a premium feel */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -34,25 +46,45 @@ body {
   background: #94a3b8; 
 }
 
-/* Glassmorphism / Vidrio Templado Utility Classes */
-.glass-panel {
-  background-color: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+/* Neumorphism Utilities */
+.neu-elevated {
+  background-color: var(--color-surface);
+  border-radius: 20px;
   box-shadow: 
-    0 4px 30px rgba(0, 0, 0, 0.03), 
-    inset 0 1px 1px rgba(255, 255, 255, 0.6),
-    0 1px 2px rgba(0, 0, 0, 0.05);
+    -8px -8px 16px rgba(255, 255, 255, 0.85),
+    8px 8px 16px rgba(180, 180, 205, 0.35);
+  border: none;
 }
 
-.glass-panel-dark {
-  background-color: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.neu-concave {
+  background-color: var(--color-surface);
+  border-radius: 18px;
   box-shadow: 
-    0 10px 40px rgba(0, 0, 0, 0.15), 
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    inset -4px -4px 8px rgba(255, 255, 255, 0.85),
+    inset 4px 4px 8px rgba(180, 180, 205, 0.35);
+  border: none;
 }
 
+.neu-btn-primary {
+  background-color: var(--color-btn-dark);
+  color: #FFFFFF;
+  border-radius: 18px;
+  box-shadow: 
+    -4px -4px 10px rgba(255, 255, 255, 0.6),
+    4px 4px 10px rgba(180, 180, 205, 0.4);
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.neu-btn-primary:active {
+  box-shadow: 
+    inset -2px -2px 5px rgba(255, 255, 255, 0.2),
+    inset 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.neu-text-main { color: var(--color-text-main); }
+.neu-text-sec { color: var(--color-text-secondary); }
+.neu-text-blue { color: var(--color-brand-blue); }
+.neu-text-red { color: var(--color-brand-red); }
+.neu-bg-main { background-color: var(--color-bg-main); }
+.neu-bg-modal { background-color: var(--color-modal); }
