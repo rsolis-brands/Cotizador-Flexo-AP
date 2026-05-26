@@ -18,10 +18,10 @@ export default function Header({ activeTab, setActiveTab }) {
           </div>
         </div>
 
-        <div className="flex neu-concave p-1.5 rounded-[20px]">
+        <div className="flex neu-concave p-1.5 rounded-[20px] flex-wrap sm:flex-nowrap gap-1">
           <button
             onClick={() => setActiveTab('cotizador')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-[16px] text-xs font-bold transition-all duration-300 ${
+            className={`flex items-center gap-2 px-3 py-2 rounded-[16px] text-xs font-bold transition-all duration-300 cursor-pointer ${
               activeTab === 'cotizador' 
                 ? 'neu-elevated neu-text-blue scale-100' 
                 : 'neu-text-sec hover:neu-text-main scale-95 hover:scale-100'
@@ -32,7 +32,7 @@ export default function Header({ activeTab, setActiveTab }) {
           </button>
           <button
             onClick={() => setActiveTab('inventario')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-[16px] text-xs font-bold transition-all duration-300 ${
+            className={`flex items-center gap-2 px-3 py-2 rounded-[16px] text-xs font-bold transition-all duration-300 cursor-pointer ${
               activeTab === 'inventario' 
                 ? 'neu-elevated neu-text-blue scale-100' 
                 : 'neu-text-sec hover:neu-text-main scale-95 hover:scale-100'
@@ -40,6 +40,17 @@ export default function Header({ activeTab, setActiveTab }) {
           >
             <LayoutList className="w-3.5 h-3.5" />
             Catálogo de Troqueles
+          </button>
+          <button
+            onClick={() => setActiveTab('cotizador_flexo')}
+            className={`flex items-center gap-2 px-3 py-2 rounded-[16px] text-xs font-bold transition-all duration-300 cursor-pointer ${
+              activeTab === 'cotizador_flexo' 
+                ? 'neu-elevated neu-text-blue scale-100' 
+                : 'neu-text-sec hover:neu-text-main scale-95 hover:scale-100'
+            }`}
+          >
+            <Ruler className="w-3.5 h-3.5" />
+            Cotizador Flexo
           </button>
         </div>
       </div>

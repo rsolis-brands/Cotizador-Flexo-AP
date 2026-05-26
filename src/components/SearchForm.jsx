@@ -102,7 +102,7 @@ export default function SearchForm({ formData, handleChange, handleSubmit, unit,
               style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%231D1D1F'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 0.75rem center', backgroundSize: '1em' }}
             >
               <option value="Rectangular">Rectangular</option>
-              <option value="Cuadrada">Cuadrada</option>
+              <option value="Cuadrado">Cuadrado</option>
               <option value="Circular">Circular</option>
               <option value="Variada">Variada</option>
               <option value="Ovalo">Ovalo</option>
@@ -124,6 +124,24 @@ export default function SearchForm({ formData, handleChange, handleSubmit, unit,
               <option value="N/A">N/A</option>
             </select>
           </div>
+        </div>
+
+        {/* Cantidad de Colores */}
+        <div className="space-y-1.5">
+          <label className="block text-xs font-bold neu-text-main flex items-center gap-1.5">
+            Cantidad de Colores (1-10)
+          </label>
+          <select
+            name="colores"
+            value={formData.colores || 1}
+            onChange={handleChange}
+            className="w-full px-3 py-2.5 neu-concave focus:ring-2 focus:ring-blue-500/20 outline-none font-semibold neu-text-main appearance-none cursor-pointer text-sm"
+            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%231D1D1F'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 0.75rem center', backgroundSize: '1em' }}
+          >
+            {[...Array(10)].map((_, i) => (
+              <option key={`color-${i+1}`} value={i+1}>{i+1}</option>
+            ))}
+          </select>
         </div>
 
         {/* Switches */}

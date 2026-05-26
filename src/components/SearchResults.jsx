@@ -1,6 +1,7 @@
 import { FileStack, AlertCircle, Calculator } from 'lucide-react';
+import { inventarioCilindros } from '../logic/cilindros';
 
-export default function SearchResults({ resultados, handleAbrirCalculadora }) {
+export default function SearchResults({ resultados, handleAbrirCalculadora, coloresRequeridos = 1 }) {
   if (resultados === null) {
     return (
       <div className="h-full flex flex-col items-center justify-center p-8 neu-concave min-h-[500px]">
@@ -44,6 +45,18 @@ export default function SearchResults({ resultados, handleAbrirCalculadora }) {
       <div className="grid gap-6">
         {resultados.map((troquel, idx) => {
           const esFoco = troquel.familia_troquel === "TROQUELES FLEXIBLES CUADRADOS Y RECTANGULARES";
+          
+          let cantidadCilindros = 0;
+          if (troquel.cilindro) {
+             cantidadCilindros = inventarioCilindros.reduce((acc, c) => {
+               if (Number(c.cilindro) === Number(troquel.cilindro)) {
+                 return acc + c.cantidad;
+               }
+               return acc;
+             }, 0);
+          }
+          const coloresReq = Number(coloresRequeridos) || 1;
+          const tieneSuficientes = cantidadCilindros >= coloresReq;
           
           return (
             <div
@@ -111,9 +124,20 @@ export default function SearchResults({ resultados, handleAbrirCalculadora }) {
                 </div>
                 <div className="flex items-center gap-2 ml-auto flex-wrap sm:flex-nowrap">
                   {troquel.cilindro && (
-                    <span className="text-[10px] font-bold px-3 py-1.5 neu-concave neu-text-main">
-                      Cilindro: {troquel.cilindro}
-                    </span>
+                    <div className="flex flex-col items-center gap-1">
+                      <span className="text-[10px] font-bold px-3 py-1.5 neu-concave neu-text-main">
+                        Cilindro: {troquel.cilindro}
+                      </span>
+                      {cantidadCilindros > 0 ? (
+                        <span className={`text-[9px] font-bold px-2 py-1 rounded-[10px] ${tieneSuficientes ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                          {tieneSuficientes ? `Cilindros suficientes (${cantidadCilindros})` : `Faltan cilindros (${cantidadCilindros}/${coloresReq})`}
+                        </span>
+                      ) : (
+                        <span className="text-[9px] font-bold px-2 py-1 rounded-[10px] bg-red-100 text-red-700">
+                          Sin cilindros (0/{coloresReq})
+                        </span>
+                      )}
+                    </div>
                   )}
                   <button
                     onClick={() => handleAbrirCalculadora(troquel)}

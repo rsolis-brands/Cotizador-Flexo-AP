@@ -9,7 +9,7 @@ import Header from './components/Header';
 import SearchForm from './components/SearchForm';
 import SearchResults from './components/SearchResults';
 import TroquelesCatalog from './components/TroquelesCatalog';
-import CalculatorPanel from './components/CalculatorPanel';
+import FlexoQuoteCalculator from './components/FlexoQuoteCalculator';
 
 function App() {
   const [activeTab, setActiveTab] = useState('cotizador'); // 'cotizador' | 'inventario'
@@ -19,104 +19,10 @@ function App() {
 
   // Calculator state
   const [selectedTroquel, setSelectedTroquel] = useState(null);
-  const [copied, setCopied] = useState(false);
-  const [calcInputs, setCalcInputs] = useState({
-    cantidadEtiquetas: 10000,
-    etiquetasPorRollo: 1000,
-    mermaArranque: 50,
-    mermaOperacion: 2,
-    anchoBanda: 0
-  });
 
   const handleAbrirCalculadora = (troquel) => {
     setSelectedTroquel(troquel);
-    setCalcInputs({
-      cantidadEtiquetas: 10000,
-      etiquetasPorRollo: 1000,
-      mermaArranque: 50,
-      mermaOperacion: 2,
-      anchoBanda: troquel.ancho_banda || 0
-    });
-    setCopied(false);
-  };
-
-  const handleCalcInputChange = (e) => {
-    const { name, value } = e.target;
-    setCalcInputs(prev => ({ ...prev, [name]: value }));
-  };
-
-  // Math calculations
-  const calcResultados = useMemo(() => {
-    if (!selectedTroquel) return null;
-
-    const Q = Number(calcInputs.cantidadEtiquetas) || 0;
-    const N = Number(calcInputs.etiquetasPorRollo) || 1;
-    const mermaArr = Number(calcInputs.mermaArranque) || 0;
-    const mermaOp = Number(calcInputs.mermaOperacion) || 0;
-    const anchoB = Number(calcInputs.anchoBanda) || Number(selectedTroquel.ancho_banda) || 0;
-
-    const C_a = Number(selectedTroquel.cavidades_ancho) || 1;
-    const C_v = Number(selectedTroquel.cavidades_avance) || 1;
-    const repeatMm = Number(selectedTroquel.repeat_mm) || 0;
-
-    const girosBase = Q / (C_a * C_v);
-    const metrosNetos = (girosBase * repeatMm) / 1000;
-    const metrosMerma = (metrosNetos * (mermaOp / 100)) + mermaArr;
-    const metrosTotales = metrosNetos + metrosMerma;
-
-    const anchoBandaM = (anchoB * 25.4) / 1000;
-    const metrosCuadrados = metrosTotales * anchoBandaM;
-
-    const largoRollo = (N * repeatMm) / (C_v * 1000);
-    const rollos = Q / N;
-
-    const girosTotales = (metrosTotales * 1000) / repeatMm;
-    const etiquetasTotalesConMerma = Math.round(girosTotales * C_a * C_v);
-
-    return {
-      girosBase: Math.ceil(girosBase),
-      metrosNetos: parseFloat(metrosNetos.toFixed(2)),
-      metrosMerma: parseFloat(metrosMerma.toFixed(2)),
-      metrosTotales: parseFloat(metrosTotales.toFixed(2)),
-      metrosCuadrados: parseFloat(metrosCuadrados.toFixed(2)),
-      largoRollo: parseFloat(largoRollo.toFixed(2)),
-      rollos: parseFloat(rollos.toFixed(1)),
-      etiquetasTotalesConMerma,
-      anchoBandaMm: Math.round(anchoB * 25.4)
-    };
-  }, [selectedTroquel, calcInputs]);
-
-  const handleCopiarResumen = () => {
-    if (!selectedTroquel || !calcResultados) return;
-
-    const texto = `--- RESUMEN DE PRODUCCIÓN Y MATERIAL ---
-Troquel Código: ${selectedTroquel.codigo_troquel}
-Medidas: ${selectedTroquel.ancho_mm} x ${selectedTroquel.largo_mm} mm
-Vías / Cavidades al ancho: ${selectedTroquel.cavidades_ancho}
-Cilindro (Dientes): ${selectedTroquel.cilindro || 'N/A'}
-Desarrollo (Repeat): ${selectedTroquel.repeat_mm} mm
-
-PARÁMETROS DE COTIZACIÓN:
-- Cantidad de Etiquetas: ${Number(calcInputs.cantidadEtiquetas).toLocaleString()} uds
-- Presentación: Rollos de ${Number(calcInputs.etiquetasPorRollo).toLocaleString()} uds
-- Ancho de Banda: ${calcInputs.anchoBanda} in (${calcResultados.anchoBandaMm} mm)
-- Merma de Arranque: ${calcInputs.mermaArranque} m
-- Merma de Operación: ${calcInputs.mermaOperacion} %
-
-RESULTADOS:
-- Metros Lineales Netos: ${calcResultados.metrosNetos.toLocaleString()} m
-- Metros de Merma: ${calcResultados.metrosMerma.toLocaleString()} m
-- METROS TOTALES A PRODUCIR: ${calcResultados.metrosTotales.toLocaleString()} m
-- Área de Material: ${calcResultados.metrosCuadrados.toLocaleString()} m²
-- Largo por Rollo individual: ${calcResultados.largoRollo.toLocaleString()} m
-- Cantidad de Rollos: ${calcResultados.rollos} rollos
-- Etiquetas a Imprimir (con merma): ${calcResultados.etiquetasTotalesConMerma.toLocaleString()} uds
-----------------------------------------`;
-
-    navigator.clipboard.writeText(texto).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
+    setActiveTab('cotizador_flexo');
   };
 
   const [formData, setFormData] = useState({
@@ -126,7 +32,8 @@ RESULTADOS:
     forma: 'Rectangular',
     esquinas: 'Rectas',
     precorte_integrado: 'NO',
-    precorte: 'NO'
+    precorte: 'NO',
+    colores: 1
   });
 
   const [resultados, setResultados] = useState(null);
@@ -160,7 +67,27 @@ RESULTADOS:
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => {
+      const newForm = { ...prev, [name]: value };
+
+      // Si el ancho y largo son iguales, forzar la forma a Cuadrado
+      if ((name === 'ancho' || name === 'largo') && newForm.ancho !== '' && newForm.largo !== '') {
+        if (Number(newForm.ancho) === Number(newForm.largo)) {
+          newForm.forma = 'Cuadrado';
+        } else if (newForm.forma === 'Cuadrado') {
+          newForm.forma = 'Rectangular'; // Volver a Rectangular si ya no es cuadrado
+        }
+      }
+
+      // Si la forma es Circular, forzar esquinas a N/A
+      if (name === 'forma' && value === 'Circular') {
+        newForm.esquinas = 'N/A';
+      } else if (name === 'forma' && prev.forma === 'Circular' && value !== 'Circular') {
+        newForm.esquinas = 'Rectas'; // Valor por defecto si sale de Circular
+      }
+
+      return newForm;
+    });
   };
 
   const handleSubmit = (e) => {
@@ -220,6 +147,7 @@ RESULTADOS:
                   <SearchResults 
                     resultados={resultados}
                     handleAbrirCalculadora={handleAbrirCalculadora}
+                    coloresRequeridos={formData.colores}
                   />
                 </div>
               </div>
@@ -231,21 +159,17 @@ RESULTADOS:
                 handleAbrirCalculadora={handleAbrirCalculadora}
               />
             )}
+
+            {activeTab === 'cotizador_flexo' && (
+              <FlexoQuoteCalculator 
+                selectedTroquel={selectedTroquel}
+                setSelectedTroquel={setSelectedTroquel}
+                setActiveTab={setActiveTab}
+              />
+            )}
           </div>
         )}
       </main>
-
-      {/* Calculadora Slide-over Panel */}
-      <CalculatorPanel 
-        selectedTroquel={selectedTroquel}
-        setSelectedTroquel={setSelectedTroquel}
-        calcInputs={calcInputs}
-        handleCalcInputChange={handleCalcInputChange}
-        setCalcInputs={setCalcInputs}
-        calcResultados={calcResultados}
-        handleCopiarResumen={handleCopiarResumen}
-        copied={copied}
-      />
     </div>
   );
 }
