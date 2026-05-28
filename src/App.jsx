@@ -9,15 +9,17 @@ import SearchForm from './components/SearchForm';
 import SearchResults from './components/SearchResults';
 import TroquelesCatalog from './components/TroquelesCatalog';
 import FlexoQuoteCalculator from './components/FlexoQuoteCalculator';
+import QuoteGenerator from './components/QuoteGenerator';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('cotizador'); // 'cotizador' | 'inventario'
+  const [activeTab, setActiveTab] = useState('cotizador'); // 'cotizador' | 'inventario' | 'cotizador_flexo' | 'generar_cotizacion'
   const [unit, setUnit] = useState('in'); // 'mm' | 'in'
   const [troquelesData, setTroquelesData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Calculator state
   const [selectedTroquel, setSelectedTroquel] = useState(null);
+  const [quoteData, setQuoteData] = useState(null);
 
   const handleAbrirCalculadora = (troquel) => {
     setSelectedTroquel(troquel);
@@ -123,7 +125,7 @@ function App() {
     <div className="min-h-screen neu-bg-main neu-text-main font-sans selection:bg-blue-100 selection:text-blue-900 overflow-x-hidden">
       
       {/* Navbar/Header */}
-      <Header activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Header activeTab={activeTab} setActiveTab={setActiveTab} hasQuoteData={!!quoteData} />
 
       <main className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 mt-4 space-y-8 min-h-[calc(100vh-6rem)]">
         
@@ -173,6 +175,17 @@ function App() {
               <FlexoQuoteCalculator 
                 selectedTroquel={selectedTroquel}
                 setSelectedTroquel={setSelectedTroquel}
+                setActiveTab={setActiveTab}
+                onGenerateQuote={(data) => {
+                  setQuoteData(data);
+                  setActiveTab('generar_cotizacion');
+                }}
+              />
+            )}
+
+            {activeTab === 'generar_cotizacion' && (
+              <QuoteGenerator 
+                quoteData={quoteData}
                 setActiveTab={setActiveTab}
               />
             )}

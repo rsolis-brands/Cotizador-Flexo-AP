@@ -88,3 +88,38 @@ body {
 .neu-text-red { color: var(--color-brand-red); }
 .neu-bg-main { background-color: var(--color-bg-main); }
 .neu-bg-modal { background-color: var(--color-modal); }
+
+/* Print Media Styles */
+@media print {
+  body {
+    background-color: #FFFFFF !important;
+    color: #1D1D1F !important;
+    font-size: 11pt;
+    line-height: 1.4;
+  }
+  
+  .print-none {
+    display: none !important;
+  }
+  
+  .print-only {
+    display: block !important;
+  }
+  
+  /* Hide standard containers and buttons */
+  header, footer, nav, button, select, input, .no-print {
+    display: none !important;
+  }
+
+  /* Reset layout margins for standard letter pages */
+  @page {
+    size: letter vertical;
+    margin: 1.5cm;
+  }
+}
+
+@media screen {
+  .print-only {
+    display: none !important;
+  }
+}

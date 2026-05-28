@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Calculator, Sparkles, Sliders, Ruler, AlertCircle, Copy, Check, ChevronLeft, Layers, Paintbrush, Plus, Trash2 } from 'lucide-react';
+import { Calculator, Sparkles, Sliders, Ruler, AlertCircle, Copy, Check, ChevronLeft, Layers, Paintbrush, Plus, Trash2, FileText } from 'lucide-react';
 import { inventarioCilindros } from '../logic/cilindros';
 
 const MATERIAL_DATABASE = [
@@ -30,7 +30,7 @@ const EFECTOS_OPTIONS = [
   'Foil Cold'
 ];
 
-export default function FlexoQuoteCalculator({ selectedTroquel, setSelectedTroquel, setActiveTab }) {
+export default function FlexoQuoteCalculator({ selectedTroquel, setSelectedTroquel, setActiveTab, onGenerateQuote }) {
   // Lógica interna de roles (ocultar costos de fábrica a nivel de código)
   const showInternalCosts = true;
 
@@ -320,6 +320,27 @@ RESULTADOS VOLUMÉTRICOS:
       setCopiedIndex(index);
       setTimeout(() => setCopiedIndex(null), 2000);
     });
+  };
+
+  const handleGoToCommercialQuote = () => {
+    if (onGenerateQuote) {
+      onGenerateQuote({
+        selectedTroquel,
+        savedMaterial,
+        tipoEntrega,
+        unidadesPorRollo,
+        filasPorRollo,
+        diametroCentro,
+        mermaArranque,
+        mermaOperacion,
+        tipoTinta,
+        coloresCount,
+        acabadosSeleccionados,
+        efectosSeleccionados,
+        quantities,
+        calculatedResults
+      });
+    }
   };
 
   return (
@@ -922,6 +943,29 @@ RESULTADOS VOLUMÉTRICOS:
 
         </div>
 
+      </div>
+
+      {/* CTA: Generar Cotización Comercial */}
+      <div className="mt-6 neu-elevated p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <div className="neu-concave p-3 shrink-0">
+            <FileText className="w-6 h-6 neu-text-blue" />
+          </div>
+          <div>
+            <h3 className="text-sm font-extrabold neu-text-main">¿Listo para cotizar al cliente?</h3>
+            <p className="text-[10px] neu-text-sec mt-0.5">
+              Genera un resumen comercial limpio con precios de venta, selección de cliente e impresión profesional.
+            </p>
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={handleGoToCommercialQuote}
+          className="shrink-0 flex items-center gap-2 px-6 py-3 text-sm font-bold neu-btn-primary transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer bg-[#005CB9] hover:bg-[#004a99]"
+        >
+          <FileText className="w-4 h-4" />
+          Generar Cotización Comercial
+        </button>
       </div>
 
     </div>

@@ -1,8 +1,8 @@
-import { Ruler, Calculator, LayoutList } from 'lucide-react';
+import { Ruler, Calculator, LayoutList, FileText } from 'lucide-react';
 
-export default function Header({ activeTab, setActiveTab }) {
+export default function Header({ activeTab, setActiveTab, hasQuoteData }) {
   return (
-    <header className="sticky top-0 z-50 neu-bg-main shadow-sm transition-all duration-300">
+    <header className="sticky top-0 z-50 neu-bg-main shadow-sm transition-all duration-300 print-none">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         <div className="flex items-center gap-4 group cursor-pointer">
           <div className="neu-elevated p-2.5 transition-transform duration-300">
@@ -51,6 +51,26 @@ export default function Header({ activeTab, setActiveTab }) {
           >
             <Ruler className="w-3.5 h-3.5" />
             Cotizador Flexo
+          </button>
+          <button
+            onClick={() => {
+              if (hasQuoteData) {
+                setActiveTab('generar_cotizacion');
+              } else {
+                alert("Primero debes calcular insumos y hacer clic en 'Generar Cotización Comercial' al final de la página de insumos.");
+              }
+            }}
+            className={`flex items-center gap-2 px-3 py-2 rounded-[16px] text-xs font-bold transition-all duration-300 cursor-pointer ${
+              activeTab === 'generar_cotizacion' 
+                ? 'neu-elevated neu-text-blue scale-100' 
+                : hasQuoteData 
+                  ? 'neu-text-sec hover:neu-text-main scale-95 hover:scale-100'
+                  : 'text-slate-400 opacity-40 scale-95 cursor-not-allowed'
+            }`}
+            title={hasQuoteData ? "Generar Cotización Comercial" : "Requiere un cálculo de insumos previo"}
+          >
+            <FileText className="w-3.5 h-3.5" />
+            Generar Cotización
           </button>
         </div>
       </div>
