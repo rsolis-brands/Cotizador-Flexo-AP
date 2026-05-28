@@ -55,8 +55,6 @@ export default function SearchResults({ resultados, handleAbrirCalculadora, colo
                return acc;
              }, 0);
           }
-          const coloresReq = Number(coloresRequeridos) || 1;
-          const tieneSuficientes = cantidadCilindros >= coloresReq;
           
           return (
             <div
@@ -121,31 +119,41 @@ export default function SearchResults({ resultados, handleAbrirCalculadora, colo
                   <span className="text-[10px] font-bold px-3 py-1.5 neu-concave neu-text-sec">
                     {troquel.forma}
                   </span>
+                  {troquel.ancho_banda && (
+                    <span className="text-[10px] font-bold px-3 py-1.5 neu-concave neu-text-blue bg-blue-50/50">
+                      Banda: {troquel.ancho_banda} in
+                    </span>
+                  )}
                 </div>
-                <div className="flex items-center gap-2 ml-auto flex-wrap sm:flex-nowrap">
+                <div className="flex items-center gap-3 ml-auto flex-wrap sm:flex-nowrap">
                   {troquel.cilindro && (
                     <div className="flex flex-col items-center gap-1">
                       <span className="text-[10px] font-bold px-3 py-1.5 neu-concave neu-text-main">
                         Cilindro: {troquel.cilindro}
                       </span>
                       {cantidadCilindros > 0 ? (
-                        <span className={`text-[9px] font-bold px-2 py-1 rounded-[10px] ${tieneSuficientes ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                          {tieneSuficientes ? `Cilindros suficientes (${cantidadCilindros})` : `Faltan cilindros (${cantidadCilindros}/${coloresReq})`}
+                        <span className="text-[9px] font-bold px-2 py-1 rounded-[10px] bg-green-100 text-green-700">
+                          Rodillos en inventario ({cantidadCilindros})
                         </span>
                       ) : (
                         <span className="text-[9px] font-bold px-2 py-1 rounded-[10px] bg-red-100 text-red-700">
-                          Sin cilindros (0/{coloresReq})
+                          Sin rodillos en inventario
                         </span>
                       )}
                     </div>
                   )}
-                  <button
-                    onClick={() => handleAbrirCalculadora(troquel)}
-                    className="flex items-center gap-1.5 px-4 py-2 text-[10px] font-bold neu-btn-primary transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
-                  >
-                    <Calculator className="w-3.5 h-3.5" />
-                    Calcular Insumos
-                  </button>
+                  <div className="flex flex-col items-end gap-1">
+                    <button
+                      onClick={() => handleAbrirCalculadora(troquel)}
+                      className="flex items-center gap-2 px-5 py-2.5 text-xs font-bold neu-btn-primary transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer bg-[#2C2C2E] hover:bg-[#005CB9] hover:text-white"
+                    >
+                      <Calculator className="w-4 h-4 text-blue-400" />
+                      Cotizar este Troquel
+                    </button>
+                    <span className="text-[9px] font-medium text-slate-400 leading-tight">
+                      Ir directo al cotizador
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>

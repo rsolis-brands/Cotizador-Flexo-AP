@@ -157,7 +157,6 @@ function App() {
                   <SearchResults 
                     resultados={resultados}
                     handleAbrirCalculadora={handleAbrirCalculadora}
-                    coloresRequeridos={formData.colores}
                   />
                 </div>
               </div>
