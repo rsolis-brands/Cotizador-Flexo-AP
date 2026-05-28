@@ -1,8 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Loader2 } from 'lucide-react';
 import { buscarTroquel } from './logic/searchEngine';
-import { db } from './firebase/config';
-import { collection, getDocs } from 'firebase/firestore';
+import { supabase } from './supabase/config';
 
 // Components
 import Header from './components/Header';
@@ -41,11 +40,22 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const querySnapshot = await getDocs(collection(db, 'troqueles'));
-        const docs = [];
-        querySnapshot.forEach((doc) => {
-          docs.push({ id_firestore: doc.id, ...doc.data() });
-        });
+        const { data, error } = await supabase
+          .from('troqueles')
+          .select('*');
+
+        if (error) {
+          console.error("Error fetching troqueles from Supabase:", error.message);
+          return;
+        }
+
+        // Map Supabase boolean fields back to 'SI'/'NO' strings
+        // so the existing search engine and UI logic remain untouched.
+        const docs = data.map((row) => ({
+          ...row,
+          precorte_integrado: row.precorte_integrado ? 'SI' : 'NO',
+          precorte_entre_cavidades: row.precorte_entre_cavidades ? 'SI' : 'NO',
+        }));
         
         // Prioridad Inicial global
         docs.sort((a, b) => {
